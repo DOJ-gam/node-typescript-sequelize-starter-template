@@ -1,3 +1,4 @@
+import { getQuery } from './../utils/queryHelper';
 import RoleModel from "../models/Role";
 import UserModel, { UserModelAttributes } from "../models/User";
 import userResource from "../resourses/userResource";
@@ -19,8 +20,8 @@ export default class UserService {
 
     async findAll(query?: any) {
         try {
-            const queryParams = query ? query : {}
-            const users = await UserModel.findAll({ where: { ...queryParams }, ...userResource.response });
+
+            const users = await UserModel.findAll({ where: { ...getQuery(query) }, ...userResource.response });
             return users;
         } catch (error) {
             throw error;

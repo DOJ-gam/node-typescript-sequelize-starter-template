@@ -1,6 +1,6 @@
 import express from "express";
 import { getAllLogs, getSingleLog } from "../../controllers/LogsController";
-import filterParams from "../../middlewares/filterParams";
+import queryParams from "../../middlewares/queryParams";
 
 
 const logsRoutes = express.Router();
@@ -14,7 +14,7 @@ const acceptedQueries = [
 ];
 
 
-logsRoutes.route("/").get(filterParams(
+logsRoutes.route("/").get(queryParams(
     acceptedQueries,
     "Logs",
 ), getAllLogs)

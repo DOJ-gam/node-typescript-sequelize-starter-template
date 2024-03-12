@@ -3,6 +3,9 @@ import { NextType, RequestType, ResponseType } from "../types/types";
 import ErrorResponse from "../utils/ErrorResponse";
 import UserModel from "../models/User";
 import userResource from "../resourses/userResource";
+import RoleModel from "../models/Role";
+import rolesResource from "../resourses/rolesResource";
+import PermissionModel from "../models/Permission";
 
 export const authUser = async (
   req: RequestType,
@@ -38,36 +41,39 @@ export const authUser = async (
     req.auth = user;
     next();
   } catch (error) {
-     next(new ErrorResponse("Authentication failed", 401));
+    next(error)
+    // next(new ErrorResponse("Authentication failed", 401));
   }
 };
 
 
-// exports.checkUserPermission = (requiredPermission) => {
-//   return async (req, res, next) => {
-//     const { roleId } = req.admin;
-//     try {
-//       const role = await db.role.findOne({
-//         where: { id: roleId },
-//         ...roleResponse,
-//       });
+export const checkUserPermission = (requiredPermission: string) => {
+  return async (req: RequestType, res: ResponseType, next: NextType) => {
+    if (!req?.auth) throw new ErrorResponse(`Authorization for '${requiredPermission || "user"}' failed,  User not Authenticated!`, 402)
+    const { roleId } = req?.auth;
+    try {
+      const permissions = await PermissionModel.findAll({
+        where: { id: roleId },
+      });
+      if (!permissions || !permissions?.length) throw new ErrorResponse(`Authorization failed, No permissions found  for the given role`, 403);
 
-//       if (
-//         !role.permissions.some(
-//           (permission) => permission.permName === requiredPermission
-//         )
-//       ) {
-//         return res
-//           .status(403)
-//           .json({ message: `Unauthorized to ${requiredPermission}` });
-//       }
+      if (
+        !permissions.some(
+          (permission) => permission.name === requiredPermission
+        )
+      ) {
+        return res
+          .status(403)
+          .json({ message: `Unauthorized to perform action: ${requiredPermission}` });
+      }
 
-//       next(); // User has the required permission, proceed to the route handler
-//     } catch (error) {
-//       console.log("====================================");
-//       console.log(error);
-//       console.log("====================================");
-//       return res.status(500).json({ message: "Internal Server Error" });
-//     }
-//   };
-// };
+      next(); // User has the required permission, proceed to the route handler
+    } catch (error) {
+      console.log("====================================");
+      console.log(error);
+      console.log("====================================");
+      next(error)
+      // next(new ErrorResponse("Authorization failed", 403));
+    }
+  };
+};

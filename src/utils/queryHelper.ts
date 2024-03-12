@@ -1,0 +1,1 @@
+export const getQuery = (query: object | null) => typeof query !== "object" ? {} : query

@@ -16,7 +16,6 @@ const register: any = [
     body("phone").notEmpty().withMessage("phone is required"),
     body("password").notEmpty().withMessage("password is required"),
     body("role").notEmpty().withMessage("role is required"),
-    body("locationId").notEmpty().withMessage("locationId is required"),
   ],
   validateRequest,
 ];

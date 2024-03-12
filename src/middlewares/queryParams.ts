@@ -5,7 +5,7 @@ import {
 } from "../types/types";
 import { Model, Op, Sequelize } from "sequelize";
 
-const filterParams =
+const queryParams =
   (acceptedParams: string[], model: string) =>
     (req: RequestType,
       res: ResponseType,
@@ -63,4 +63,4 @@ const filterParams =
       next();
     };
 
-export default filterParams;
+export default queryParams;

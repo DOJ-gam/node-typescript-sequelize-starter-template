@@ -1,7 +1,8 @@
 import express from "express";
 import { createUser, deleteUser, getAllUsers, getSingleUser, updateUser } from "../../controllers/UserController";
 import userValidator from "../../validators/userValidator";
-import filterParams from "../../middlewares/filterParams";
+import queryParams from "../../middlewares/queryParams";
+import { checkUserPermission } from "../../middlewares/auth";
 
 
 const userRoutes = express.Router();
@@ -15,10 +16,14 @@ const acceptedQueries = [
     "phone",
 ];
 
-userRoutes.route("/").get(filterParams(
-    acceptedQueries,
-    "User",
-), getAllUsers).post(userValidator.register, createUser)
+userRoutes.route("/")
+    .get(
+        checkUserPermission("getUsers"),
+        queryParams(
+            acceptedQueries,
+            "User",
+        ), getAllUsers)
+    .post(userValidator.register, createUser)
 userRoutes.route("/:id").get(getSingleUser).put(updateUser).delete(deleteUser)
 
 export default userRoutes;

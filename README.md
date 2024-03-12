@@ -1,4 +1,4 @@
-# Node js, Typescript, and Sequelize Started Template
+# Node js, Typescript, and Sequelize Starter Template
 
 - This is a Node js starter template using TypeScript and Sequelize.js for Object Relational Mapping (ORM).
 
@@ -7,8 +7,13 @@
 - The project follows the MVC pattern, and a very comprehensive, maintainable and scaleable structure has been setup.
 - It already has an authentication system with JWT token based authorization.
 - User Roles and Permissions functionality is already implemented.
+- Protect Routes so that only authorized users with authorized roles and permissions can access them.
 - A logging middleware is included to log all requests made on the server to the databse.
 - Routes, Controllers, Services, and Resources have already been created to help mange the Users, Roles, Permissions, and Logs.
+- A very easy and efficient route validation mechanism is also being used, using express-validator package
+- Custom error handling mechanism is in place which returns appropriate status and messages
+- A middleware is also added to enable you query rows in the database using any existing column name.
+- Pagination is also included in the application
 - There are also several helper functions included in the utils folder to help you.
 
   > I made this to help me and anybody who wants to start a project using Node.js, typescript, and mySQL using Sequelize as an ORM. If you notice any issues in the code, folder structure, or want to contribute to the improvement of the project please feel free to offer your help, Thank you!
