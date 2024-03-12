@@ -39,10 +39,10 @@ export default class PermissionsService {
           // }
 
           // check if parentId exists
-          if (perm.parent) {
-            const parentExists = await PermissionModel.findOne({ where: { name: perm.parent } })
-            if (!parentExists) throw new ErrorResponse(`Permission Parent Name: ${perm.parent} does not exists`, 404)
-          }
+          // if (perm.parent) {
+          //   const parentExists = await PermissionModel.findOne({ where: { name: perm.parent } })
+          //   if (!parentExists) throw new ErrorResponse(`Permission Parent Name: ${perm.parent} does not exists`, 404)
+          // }
 
           const insertedRecord = await PermissionModel.create(perm);
           createdPermission.push(insertedRecord);
@@ -189,10 +189,10 @@ export default class PermissionsService {
       //   data.parent = data.parent.toLowerCase()
       // }
       // check if parentId exists
-      if (data.parent) {
-        const parentExists = await PermissionModel.findOne({ where: { name: data.parent } })
-        if (!parentExists) throw new ErrorResponse(`Permission Parent Name: ${data.parent} does not exists`, 404)
-      }
+      // if (data.parent) {
+      //   const parentExists = await PermissionModel.findOne({ where: { name: data.parent } })
+      //   if (!parentExists) throw new ErrorResponse(`Permission Parent Name: ${data.parent} does not exists`, 404)
+      // }
 
       const updatedPermission = await PermissionModel.update(
         { ...data },

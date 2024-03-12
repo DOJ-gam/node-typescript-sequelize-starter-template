@@ -18,6 +18,11 @@
 ## Clone and Run Project
 
 - Clone the project
+
+```bash
+git clone git@github.com:DOJ-gam/node-typescript-sequelize-starter-template.git
+```
+
 - Run the the command below to install npm dependencies
 
 ```bash

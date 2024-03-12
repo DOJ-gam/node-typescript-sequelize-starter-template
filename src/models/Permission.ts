@@ -3,14 +3,14 @@ import db from "../config/db";
 
 export interface PermissionModelAttributes {
     id: number | null,
-    parent: number | null,
+    // parent: number | null,
     name: string,
     description: string
 }
 
 export default class PermissionModel extends Model<PermissionModelAttributes> {
     id!: number | null;
-    parent!: number | null;
+    // parent!: number | null;
     name!: string;
     description!: string;
 }
@@ -31,15 +31,15 @@ PermissionModel.init(
             type: DataTypes.STRING,
             allowNull: false
         },
-        parent: {
-            allowNull: true,
-            type: DataTypes.STRING,
-            primaryKey: false,
-            references: {
-                model: PermissionModel,
-                key: "name",
-            },
-        },
+        // parent: {
+        //     allowNull: true,
+        //     type: DataTypes.STRING,
+        //     primaryKey: false,
+        //     references: {
+        //         model: PermissionModel,
+        //         key: "name",
+        //     },
+        // },
     },
     {
         sequelize: db,

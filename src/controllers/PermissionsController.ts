@@ -91,14 +91,11 @@ export const getUserPermissions = async (req: Request,
     );
     if (!permissions)
       return next(new ErrorResponse("No permission found", 404));
-    // const perms = await groupedUserPermissions(permissions.permissions)
-    const perms = await groupedPermissions(permissions.permissions)
-    permissions.permissions = perms
+
     return res.status(200).json({
       success: true,
       message: "Permissions fetched",
       data: permissions,
-      // data: perms,
     });
   } catch (error) {
     next(error);
